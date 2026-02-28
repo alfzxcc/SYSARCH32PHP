@@ -1,0 +1,83 @@
+/* All your styling goes here - No <style> tags needed */
+body { 
+    font-family: 'Segoe UI', sans-serif; 
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('UC.jpg') no-repeat center center fixed; 
+    background-size: cover;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    margin: 0; 
+}
+
+.card-header {
+    display: flex;
+    flex-direction: column; /* Stacks logo over text */
+    align-items: center;    /* Centers horizontally */
+    margin-bottom: 25px;    /* Gap before the input fields */
+}
+
+.app-logo {
+    width: 200px;            /* Technician's choice: not too big, not too small */
+    height: auto;
+    margin-bottom: 12px;
+    /* Optional: filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); */
+}
+
+.app-title {
+    margin: 0;
+    font-size: 22px;
+    color: #333;
+    letter-spacing: 1px;
+    text-transform: uppercase; /* Makes it look more official */
+}
+
+.login-card { 
+    background: white; 
+    padding: 2.5rem; 
+    border-radius: 12px; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
+    width: 380px; 
+}
+
+h2 { text-align: center; color: #333; margin-bottom: 1.5rem; }
+
+input { 
+    width: 100%; 
+    padding: 12px; 
+    margin: 10px 0; 
+    border: 1px solid #ddd; 
+    border-radius: 6px; 
+    box-sizing: border-box; 
+}
+
+.btn-group { display: flex; flex-direction: column; gap: 10px; }
+
+.btn-login { 
+    background: #0078d4; 
+    color: white; 
+    padding: 12px; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+}
+
+.btn-register { 
+    background: #f3f3f3; 
+    color: #333; 
+    padding: 12px; 
+    border: 1px solid #ccc; 
+    border-radius: 6px; 
+    text-align: center; 
+    text-decoration: none; 
+}
+.footer-text {
+    text-align: center;
+    font-size: 13px;
+    color: #95a5a6; 
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #eeeeee; 
+    letter-spacing: 0.5px;
+}
