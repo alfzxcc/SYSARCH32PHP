@@ -1,25 +1,30 @@
 <?php include 'header.php'; ?>
 
-<div class="login-card">
-    <div class="card-header">
-        <img src="uc2.jpg" alt="Project Logo" class="app-logo">
-        <h2 class="app-title">Portal</h2>
+<div class="container-wrapper">
+    <div class="announcement-container">
+        <div class="announcement-header">
+            <i class="fas fa-bullhorn"></i>
+            <h3>Announcements</h3>
+        </div>
+        <div class="announcement-body">
+            <div class="announcement-item">
+                <span class="announcement-date">May 24, 2024</span>
+                <p>The CCS Laboratory will be closed on May 25 for maintenance. Please save your work accordingly.</p>
+            </div>
+            <div class="announcement-item">
+                <span class="announcement-date">May 20, 2024</span>
+                <p>New Sit-in rules: Students must present their validated ID before entering the lab.</p>
+            </div>
+            <div class="announcement-item">
+                <span class="announcement-date">May 15, 2024</span>
+                <p>CCS Days are approaching! Stay tuned for the schedule of activities.</p>
+            </div>
+        </div>
     </div>
 
-    <form action="login_process.php" method="POST">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        
-        <div class="btn-group">
-            <button type="submit" class="btn-login">Login</button>
-            <a href="register.php" class="btn-register">Create New Account</a>
-        </div>
-    </form>
-    
-    <div class="footer-text">
-        SYSARCH32PHP Project Environment
-    </div>
+
 </div>
 
+</main>
 </body>
 </html>
