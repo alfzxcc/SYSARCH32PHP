@@ -1,5 +1,5 @@
 <?php
-// Ensure this matches your connection filename (you used db_connect.php or db_connection.php)
+// Ensure this matches your connection filename
 require_once 'db_connect.php'; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -8,14 +8,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fname    = $_POST['firstname'];
     $lname    = $_POST['lastname'];
     $mname    = $_POST['midname'];
+    
+    // --- UPDATED COURSE LOGIC ---
     $course   = $_POST['course'];
+    if ($course === 'Other' && !empty($_POST['custom_course'])) {
+        $course = $_POST['custom_course'];
+    }
+    // ----------------------------
+
     $level    = $_POST['course_level'];
     $email    = $_POST['email'];
     $address  = $_POST['address'];
     $pass     = $_POST['pass'];
     $confirm  = $_POST['confirm_pass'];
 
-    // Check if passwords match before doing anything else
+    // Check if passwords match
     if ($pass !== $confirm) {
         echo "<script>
                 alert('Error: Passwords do not match!');
@@ -29,13 +36,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fname   = $conn->real_escape_string($fname);
     $lname   = $conn->real_escape_string($lname);
     $mname   = $conn->real_escape_string($mname);
-    $course  = $conn->real_escape_string($course);
+    $course  = $conn->real_escape_string($course); // This will now be the custom name if 'Other' was used
     $level   = $conn->real_escape_string($level);
     $email   = $conn->real_escape_string($email);
     $address = $conn->real_escape_string($address);
     $pass    = $conn->real_escape_string($pass);
 
-    // STEP 1: Check if ID Number already exists (using your 'id' column)
+    // STEP 1: Check if ID Number already exists
     $checkQuery = "SELECT * FROM users WHERE id = '$id_num'";
     $result = $conn->query($checkQuery);
 
@@ -45,8 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 window.location.href='register.php';
               </script>";
     } else {
-        // STEP 2: Insert all student details into the database
-        // Columns: id, lastname, firstname, midname, course_level, pass, email, course, address
+        // STEP 2: Insert into database
         $sql = "INSERT INTO users (id, lastname, firstname, midname, course_level, pass, email, course, address) 
                 VALUES ('$id_num', '$lname', '$fname', '$mname', '$level', '$pass', '$email', '$course', '$address')";
 

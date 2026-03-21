@@ -1,4 +1,7 @@
-<?php include 'header.php'; ?>
+<?php 
+include 'header.php'; 
+require_once 'db_connect.php'; // Needed to talk to the database
+?>
 
 <div class="container-wrapper">
     <div class="announcement-container">
@@ -6,24 +9,38 @@
             <i class="fas fa-bullhorn"></i>
             <h3>Announcements</h3>
         </div>
+        
         <div class="announcement-body">
-            <div class="announcement-item">
-                <span class="announcement-date">May 24, 2024</span>
-                <p>The CCS Laboratory will be closed on May 25 for maintenance. Please save your work accordingly.</p>
-            </div>
-            <div class="announcement-item">
-                <span class="announcement-date">May 20, 2024</span>
-                <p>New Sit-in rules: Students must present their validated ID before entering the lab.</p>
-            </div>
-            <div class="announcement-item">
-                <span class="announcement-date">May 15, 2024</span>
-                <p>CCS Days are approaching! Stay tuned for the schedule of activities.</p>
-            </div>
+            <?php
+            // Fetch the 3 most recent announcements from the database
+            $sql = "SELECT * FROM announcements ORDER BY date_posted DESC LIMIT 3";
+            $result = $conn->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                // Loop through each row found in the database
+                while($row = $result->fetch_assoc()) {
+                    // Convert the database timestamp into a readable date (e.g., Oct 24, 2025)
+                    $formattedDate = date("M d, Y", strtotime($row['date_posted']));
+                    
+                    echo '
+                    <div class="announcement-item">
+                        <span class="announcement-date">' . $formattedDate . '</span>
+                        <p><strong>' . htmlspecialchars($row['title']) . ':</strong> ' . htmlspecialchars($row['content']) . '</p>
+                    </div>';
+                }
+            } else {
+                // If the table is empty, show this default message
+                echo '
+                <div class="announcement-item">
+                    <span class="announcement-date">' . date("M d, Y") . '</span>
+                    <p>Welcome to the CCS Sit-in System. Currently, there are no new announcements. Stay tuned!</p>
+                </div>';
+            }
+            ?>
         </div>
     </div>
 
-
-</div>
+    </div>
 
 </main>
 </body>
