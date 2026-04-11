@@ -5,7 +5,19 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 include 'header.php'; 
-require_once 'db_connect.php'; // Required to fetch announcements
+require_once 'db_connect.php'; 
+
+// Fetch real-time student data directly from the database
+$uid = $_SESSION['user_id'];
+$userQuery = "SELECT * FROM users WHERE id = '$uid'";
+$userResult = $conn->query($userQuery);
+$userData = $userResult->fetch_assoc();
+
+// Fallback logic for name display to prevent "Undefined Index" errors
+$firstName = $userData['firstname'] ?? 'User';
+$lastName = $userData['lastname'] ?? '';
+$midName = !empty($userData['midname']) ? " " . $userData['midname'][0] . ". " : " ";
+$fullName = htmlspecialchars($firstName . $midName . $lastName);
 ?>
 
 <div class="dashboard-container">
@@ -18,36 +30,36 @@ require_once 'db_connect.php'; // Required to fetch announcements
             
             <div class="info-group">
                 <label><i class="fas fa-id-card"></i> ID NUMBER</label>
-                <span><?php echo $_SESSION['user_id']; ?></span>
+                <span><?php echo htmlspecialchars($userData['id']); ?></span>
             </div>
 
             <div class="info-group">
                 <label><i class="fas fa-user"></i> FULL NAME</label>
-                <span><?php echo $_SESSION['firstName'] . " " . $_SESSION['midName'] . " " . $_SESSION['lastName']; ?></span>
+                <span><?php echo $fullName; ?></span>
             </div>
 
             <div class="info-group">
                 <label><i class="fas fa-graduation-cap"></i> COURSE</label>
-                <span><?php echo $_SESSION['course']; ?></span>
+                <span><?php echo htmlspecialchars($userData['course'] ?? 'N/A'); ?></span>
             </div>
 
             <div class="info-group">
                 <label><i class="fas fa-level-up-alt"></i> YEAR LEVEL</label>
-                <span>Year <?php echo $_SESSION['course_level'] ?? 'N/A'; ?></span>
+                <span>Year <?php echo htmlspecialchars($userData['course_level'] ?? 'N/A'); ?></span>
             </div>
 
             <div class="info-group highlight">
                 <label><i class="fas fa-hourglass-half"></i> REMAINING SESSIONS</label>
                 <span class="session-count">
                     <?php 
-                        // This checks if 'sessions' exists. If not, it displays 30 instead of crashing.
-                        echo isset($_SESSION['sessions']) ? $_SESSION['sessions'] : '30'; 
+                        // Pull directly from the new column we added to the DB
+                        echo htmlspecialchars($userData['remaining_sessions'] ?? '30'); 
                     ?>
                 </span> 
             </div>
         </div>
         <div style="margin-top: 20px;">
-            <a href="student_sitin.php" class="btn-login" style="display: block; text-align: center; text-decoration: none; background: #003366;">
+            <a href="student_sitin.php" class="btn-login" style="display: block; text-align: center; text-decoration: none; background: #003366; border-radius: 8px; padding: 12px;">
                 <i class="fas fa-plus"></i> Request New Sit-in
             </a>
         </div>
@@ -62,13 +74,11 @@ require_once 'db_connect.php'; // Required to fetch announcements
 
             <div class="announcement-feed">
                 <?php
-                // Fetch latest 5 announcements
                 $sql = "SELECT * FROM announcements ORDER BY date_posted DESC LIMIT 5";
                 $result = $conn->query($sql);
 
                 if ($result && $result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        // Set CSS color class based on category
                         $category = $row['category'];
                         $class = "";
                         if ($category == 'Maintenance') $class = "warning";

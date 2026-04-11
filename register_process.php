@@ -51,10 +51,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 alert('Error: ID Number already registered!');
                 window.location.href='register.php';
               </script>";
-    } else {
-        // STEP 2: Insert into database
-        $sql = "INSERT INTO users (id, lastname, firstname, midname, course_level, pass, email, course, address) 
-                VALUES ('$id_num', '$lname', '$fname', '$mname', '$level', '$pass', '$email', '$course', '$address')";
+   } else {
+        // STEP 2: Insert into database 
+        // We add 'role' (set to 0 for students) and 'remaining_sessions' (set to 30)
+        $sql = "INSERT INTO users (id, lastname, firstname, midname, course_level, pass, email, course, address, role, remaining_sessions) 
+                VALUES ('$id_num', '$lname', '$fname', '$mname', '$level', '$pass', '$email', '$course', '$address', 0, 30)";
 
         if ($conn->query($sql) === TRUE) {
             echo "<script>
