@@ -12,14 +12,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass_input = $conn->real_escape_string($pass_input);
 
     // Search for the ID and Password in your 'users' table
-    $sql = "SELECT * FROM users WHERE id = '$id_input' AND pass = '$pass_input'";
+    $sql = "SELECT * FROM users WHERE id_number = '$id_input' AND pass = '$pass_input'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $user_data = $result->fetch_assoc();
 
         // 1. Store ALL user info in session (Matches your phpMyAdmin column casing)
-        $_SESSION['user_id']      = $user_data['id'];
+        $_SESSION['user_id']      = $user_data['id_number'];
         $_SESSION['sessions'] = $user_data['sessions']; // Add this line!
         $_SESSION['lastName']     = $user_data['lastName'];   
         $_SESSION['firstName']    = $user_data['firstName'];  
@@ -30,21 +30,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['address']      = $user_data['address'];
         
         // 2. STORE THE ROLE (Critical for Admin access)
-        $_SESSION['role']         = $user_data['role']; // 0 for Student, 1 for Admin
+        $_SESSION['role'] = $user_data['role'];
 
         // 3. SUCCESS REDIRECTION LOGIC
-        if ($_SESSION['role'] == 1) {
+        if ($_SESSION['role'] === 'admin') { // Changed from == 1
             // Logged in as ADMIN
             echo "<script>
                     alert('Admin Login Successful! Welcome, " . $user_data['firstName'] . ".');
                     window.location.href='admin_dashboard.php'; 
-                  </script>";
+                </script>";
         } else {
             // Logged in as STUDENT
             echo "<script>
                     alert('Login Successful! Welcome back, " . $user_data['firstName'] . ".');
                     window.location.href='dashboard.php'; 
-                  </script>";
+                </script>";
         }
     } else {
         // FAILURE

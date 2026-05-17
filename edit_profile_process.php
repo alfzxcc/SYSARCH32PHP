@@ -14,7 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'])) {
     $course  = $conn->real_escape_string($_POST['course']);
     $level   = $conn->real_escape_string($_POST['course_level']);
     
-    // Inside edit_profile_process.php
     $pass = $_POST['new_password'];
     $confirm = $_POST['confirm_password'];
 
@@ -44,7 +43,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'])) {
         }
     }
 
-    // The Master Update Query
+    // --- FIX: Define the $sql variable before using it ---
+    $sql = "UPDATE users SET 
+            firstname = '$fname', 
+            lastname = '$lname', 
+            midname = '$mname', 
+            address = '$address', 
+            email = '$email', 
+            course = '$course', 
+            course_level = '$level'
+            $pass_query 
+            $photo_query 
+            WHERE id_number = '$uid'"; // Corrected to use id_number
+
+    // Execute the Master Update Query
     if ($conn->query($sql) === TRUE) {
         // REFRESH SESSION DATA SO IT REFLECTS IMMEDIATELY
         $_SESSION['firstName'] = $fname;
@@ -53,7 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'])) {
         $_SESSION['course'] = $course;
         $_SESSION['course_level'] = $level;
         
-        // Only update the session profile pic if a new one was actually uploaded
         if (!empty($photo_query)) {
             $_SESSION['profile_pic'] = $target_file;
         }

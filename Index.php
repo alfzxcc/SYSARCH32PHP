@@ -12,15 +12,14 @@ require_once 'db_connect.php'; // Needed to talk to the database
         
         <div class="announcement-body">
             <?php
-            // Fetch the 3 most recent announcements from the database
-            $sql = "SELECT * FROM announcements ORDER BY date_posted DESC LIMIT 3";
+            // FIX: Changed date_posted to created_at in the ORDER BY clause
+            $sql = "SELECT * FROM announcements ORDER BY created_at DESC LIMIT 3";
             $result = $conn->query($sql);
 
             if ($result && $result->num_rows > 0) {
-                // Loop through each row found in the database
                 while($row = $result->fetch_assoc()) {
-                    // Convert the database timestamp into a readable date (e.g., Oct 24, 2025)
-                    $formattedDate = date("M d, Y", strtotime($row['date_posted']));
+                    // This line is already correct in your snippet
+                    $formattedDate = date("M d, Y", strtotime($row['created_at']));
                     
                     echo '
                     <div class="announcement-item">

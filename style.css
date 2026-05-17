@@ -8,10 +8,12 @@ body {
     min-height: 100vh;
 }
 
-/* --- Top Navigation --- */
+/* ==========================================================================
+   --- Top Navigation (Balanced Flex Layout) ---
+   ========================================================================== */
 .top-nav {
     background: #003366;
-    border-bottom: 3px solid #FFD700; /* Thin Gold line for branding */
+    border-bottom: 4px solid #FFD700; /* Distinct Branding Accent Line */
     position: fixed;
     top: 0;
     width: 100%;
@@ -20,12 +22,20 @@ body {
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: 1400px; /* Increased from 1200px to give the 9 items breathing room */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.nav-brand-link {
+    text-decoration: none; 
+    display: block;        
+    cursor: pointer;
+    flex-shrink: 0;        /* Prevents school name from compressing */
 }
 
 .nav-brand {
@@ -33,61 +43,76 @@ body {
     flex-direction: column;
 }
 
-.nav-brand-link {
-    text-decoration: none; /* Removes the underline */
-    display: block;        /* Makes the entire area clickable */
-    cursor: pointer;
-}
-
 .brand-main {
     color: #ffffff;
     font-weight: 800;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     letter-spacing: 0.5px;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
 .brand-sub {
-    color: #FFD700; /* UC Blue accent */
+    color: #FFD700; 
     font-size: 0.75rem;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .nav-menu {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 12px; /* Reduced from 25px so items don't push each other off-screen */
     margin: 0;
     padding: 0;
 }
 
+.nav-menu li {
+    display: flex;
+    align-items: center;
+}
+
 .nav-menu a {
-    color: #ffffff;
-    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
     text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
+    font-size: 13.5px; /* Slightly adjusted down from 14px for better row distribution */
+    transition: all 0.2s ease-in-out;
+    white-space: nowrap; /* CRITICAL: Prevents long titles like 'Testimonials' from snapping onto two lines */
+    padding: 6px 8px;
+    border-radius: 4px;
 }
 
 .nav-menu a:hover {
-    color: #FFD700; /* Turns gold on hover */
+    color: #FFD700; 
+    background: rgba(255, 255, 255, 0.08); /* Soft background block tracking on hover */
+}
+
+/* Base structural adjustments for uniform action buttons */
+.nav-btn-reg {
+    background: #e74c3c !important; /* Forces your logout to stay clear red */
+    color: #ffffff !important; 
+    padding: 6px 14px !important;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+.nav-btn-reg:hover {
+    background: #c0392b !important;
+    color: #ffffff !important;
 }
 
 .nav-separator {
     width: 1px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.3);
+    height: 16px;
+    background: rgba(255, 255, 255, 0.25);
 }
 
-/* Updated Register Button to match Gold theme */
-.nav-btn-reg {
-    background: #FFD700;
-    color: #003366 !important; /* Navy text on gold button */
-    padding: 8px 20px;
-    border-radius: 5px;
-    font-weight: bold;
+/* Notification layout correction */
+.notif-wrapper {
+    position: relative;
 }
 
 /* --- Main Content Layout --- */
@@ -225,6 +250,40 @@ input {
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.4;
+}
+
+
+/* This targets the specific card in your PHP */
+.announcement-card {
+    background: white; 
+    padding: 2.5rem; 
+    border-radius: 12px; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
+    min-height: 500px; /* Gives it consistent height */
+}
+
+
+
+.card-header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.card-header-main h2 {
+    margin: 0;
+    color: #003366; /* UC Navy */
+    font-size: 1.5rem;
+}
+
+.view-all {
+    font-size: 0.8rem;
+    color: #777;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 /* --- Login Card (The Fixed Element) --- */
@@ -434,10 +493,11 @@ input {
 .dashboard-container {
     display: flex;
     gap: 20px;
-    max-width: 1200px;
-    margin: 20px auto;
-    width: 95%;
-    align-items: flex-start;
+    align-items: flex-start; /* Keeps cards at the top */
+    justify-content: center;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto ;
 }
 
 /* Base column style */
@@ -447,15 +507,151 @@ input {
     gap: 20px;
 }
 
+.side-column {
+    flex: 1;
+    min-width: 300px;
+}
+
+.center-column {
+    flex: 2;
+    min-width: 400px;
+}
+
+.request-btn {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-decoration: none; 
+    background: #003366; 
+    border-radius: 8px; 
+    padding: 15px; 
+    color: white; 
+    font-weight: bold;
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+/* Notif Badge */
+/* --- Action Buttons --- */
+.request-btn {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-decoration: none; 
+    background: #003366; 
+    border-radius: 8px; 
+    padding: 15px; 
+    color: white; 
+    font-weight: bold;
+    width: 100%; 
+    box-sizing: border-box;
+    transition: background 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.request-btn:hover {
+    background: #0056b3;
+    color: white;
+}
+
+/* --- Notification Module --- */
+.notif-wrapper { 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+}
+
+/* The red circle showing unread count */
+.notif-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e74c3c;
+    color: white;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    border: 2px solid #003366; /* Matches the nav background */
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* The Dropdown Container */
+.notif-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 20px;
+    background: white;
+    width: 320px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    z-index: 1001;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+.notif-header {
+    background: #f8f9fa;
+    padding: 12px;
+    font-weight: bold;
+    color: #003366;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.notif-body { 
+    max-height: 400px; 
+    overflow-y: auto; 
+}
+
+.notif-item {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s;
+    text-decoration: none;
+    display: block;
+}
+
+.notif-item:hover { background: #f9f9f9; }
+
+.notif-item p { 
+    margin: 0; 
+    color: #333; 
+    font-size: 0.85rem; 
+    line-height: 1.4; 
+}
+
+.notif-item small { 
+    color: #888; 
+    font-size: 0.75rem; 
+    margin-top: 5px; 
+    display: block; 
+}
+
+/* Background for unread alerts */
+.unread-bg { 
+    background: #f0f7ff; 
+}
+
 /* Side columns (Profile & Rules) */
 .side-column {
     flex: 1; /* Takes 25% */
+    min-width: 300px;
 }
 
 /* Center column (Announcements) */
 .center-column {
     flex: 2; /* Takes 50% */
+    min-width: 400px;
+
 }
+
+
+
 
 /* Card Styling */
  .content-card {
@@ -507,7 +703,7 @@ input {
 .profile-card {
     background: #fff;
     border-radius: 12px;
-    padding: 20px;
+    padding: 30px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
@@ -739,6 +935,17 @@ input {
 .btn-post:hover { background: #002244; }
 
 /* Admin Table */
+
+.admin-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    border-top: 5px solid #003366; /* Added UC Navy Blue top accent */
+}
+
+
 .admin-table {
     width: 100%;
     border-collapse: collapse;
@@ -757,12 +964,14 @@ input {
 
 
 .admin-container {
-    padding-top: 30px; /* Adjust this so it clears the Nav bar */
     max-width: 1200px;
-    margin: 0 auto;
-    padding-bottom: 50px;
+    margin: 10px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.9); /* High-visibility semi-transparent white */
+    backdrop-filter: blur(10px);          /* Blurs the background image behind the dashboard */
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 }
-
 /* Add these for the tags if not already there */
 .tag.info {
     background: #e0f2fe;
@@ -781,11 +990,20 @@ input {
     margin: 15px 0;
 }
 
+.admin-card h3 {
+    color: #003366;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 /* Graph Card Adjustment */
 .admin-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns for Form and Graph */
-    gap: 25px;
+    display: grid; 
+    grid-template-columns: 1fr 1.5fr 1fr; 
+    gap: 20px; 
+    align-items: start;
 }
 
 /* If you want the table to be full width below the graph/form */

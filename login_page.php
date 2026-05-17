@@ -3,7 +3,7 @@ include 'header.php';
 
 // Optional: Redirect users if they are already logged in
 if (isset($_SESSION['user_id'])) {
-    if ($_SESSION['role'] == 1) {
+    if ($_SESSION['role'] === 'admin') { // Changed from == 1
         header("Location: admin_dashboard.php");
     } else {
         header("Location: dashboard.php");
@@ -46,8 +46,8 @@ if (isset($_SESSION['user_id'])) {
         </form>
         
         <div class="footer-text">
-            <strong>UC-CICS</strong><br>
-            SYSARCH32PHP Project Environment
+            <strong>UC-CCS</strong><br>
+            SYSARCH32PHP - Torrepalma
         </div>
     </div>
 </div>

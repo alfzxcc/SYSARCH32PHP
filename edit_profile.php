@@ -4,7 +4,7 @@ include 'header.php';
 require_once 'db_connect.php';
 
 $uid = $_SESSION['user_id'];
-$userData = $conn->query("SELECT * FROM users WHERE id = '$uid'")->fetch_assoc();
+$userData = $conn->query("SELECT * FROM users WHERE id_number = '$uid'")->fetch_assoc();
 $current_pic = !empty($userData['profile_pic']) ? $userData['profile_pic'] : 'default_avatar.png';
 ?>
 
